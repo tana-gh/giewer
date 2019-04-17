@@ -1,0 +1,51 @@
+{
+  "name": "giewer",
+  "version": "0.1.0",
+  "description": "GitHub and Gist viewer component",
+  "main": "dist/production/giewer.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tana-gh/giewer.git"
+  },
+  "author": "tana",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "dev": "webpack-dev-server --env.dev",
+    "build": "webpack --env.dev",
+    "release": "webpack --env.prod"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.3.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.4",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@types/jest": "^24.0.11",
+    "@types/jquery": "^3.3.29",
+    "@types/webfontloader": "^1.6.29",
+    "autoprefixer": "^9.5.0",
+    "babel-jest": "^24.7.1",
+    "babel-loader": "^8.0.5",
+    "copy-webpack-plugin": "^5.0.1",
+    "css-loader": "^2.1.1",
+    "file-loader": "^3.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.7.1",
+    "jquery": "^3.4.0",
+    "postcss-loader": "^3.0.0",
+    "style-loader": "^0.23.1",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "ts-jest": "^24.0.2",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.3.3333",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.2.1"
+  }
+}
