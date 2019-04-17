@@ -5,4 +5,3 @@
 # Giewer
 
 A GitHub and Gist viewer component.
-
