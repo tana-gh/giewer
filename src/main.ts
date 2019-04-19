@@ -1,8 +1,4 @@
 import '@/stylus/style.styl'
+import { createComponent } from '@/components/giewer'
 
-export const createComponent = () => {
-    const main    = document.getElementById('main')
-    const element = document.createElement('h1')
-    element.textContent = 'Hello, world!'
-    main!.appendChild(element)
-}
+createComponent('.ace_editor')

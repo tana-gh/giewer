@@ -10,9 +10,3 @@ body {
 .wf-active, .wf-inactive {
     visibility: visible;
 }
-
-#main {
-    width  : 100%;
-    display: flex;
-    justify-content: center;
-}
