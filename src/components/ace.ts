@@ -1,6 +1,7 @@
-import urls from '@/utils/urls'
+import urls   from '@/utils/urls'
+import * as C from '@/utils/constants'
 
-declare const ace
+declare var ace
 
 const loadedUrls = {
     ace   : {},
@@ -9,9 +10,17 @@ const loadedUrls = {
 }
 
 export const appendAce = async (element: Element, mode?: string, theme?: string) => {
+    if (element.classList.contains(C.aceEditorClass)) {
+        return
+    }
+    
     await loadScript('ace'  , 'ace')
     await loadScript('mode' , mode )
     await loadScript('theme', theme)
+
+    if (typeof ace === 'undefined') {
+        return
+    }
 
     const editor = ace.edit(element)
     if (mode ) editor.session.setMode(`ace/mode/${mode}`)
@@ -20,11 +29,11 @@ export const appendAce = async (element: Element, mode?: string, theme?: string)
 
 const loadScript = async (kind: 'ace' | 'mode' | 'theme', key: string | undefined) => {
     if (!key) {
-        return Promise.resolve('no script loaded')
+        return
     }
 
     if (!(key in urls[kind]) || key in loadedUrls[kind]) {
-        return Promise.resolve('already loaded')
+        return
     }
 
     loadedUrls[kind][key] = urls[kind][key]
@@ -32,7 +41,7 @@ const loadScript = async (kind: 'ace' | 'mode' | 'theme', key: string | undefine
     return await new Promise((res, rej) => {
         const script  = document.createElement('script')
         script.src    = urls[kind][key]
-        script.onload = () => res('ok')
+        script.onload = () => res()
         document.body.appendChild(script)
     })
 }
