@@ -1,11 +1,6 @@
 {
     "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "targets": "> 0.5%, last 2 version, not dead"
-            }
-        ]
+        "@babel/preset-env"
     ],
     "sourceMaps": true,
     "plugins": [
