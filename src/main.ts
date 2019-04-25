@@ -1,4 +1,6 @@
 import '@/stylus/style.styl'
 import { createComponent } from '@/components/giewer'
 
-createComponent('.giewer')
+window.onload = () => {
+    createComponent('.giewer')
+}
