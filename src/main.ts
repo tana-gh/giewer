@@ -1,6 +1,6 @@
 import '@/stylus/style.styl'
 import { createComponent } from '@/components/giewer'
 
-window.onload = () => {
+window.addEventListener('load', () => {
     createComponent('.giewer')
-}
+})

@@ -1,5 +1,5 @@
 
-window.onload = () => {
+window.addEventListener('load', () => {
     WebFont.load({
         google: {
             families: [
@@ -8,4 +8,4 @@ window.onload = () => {
             ]
         }
     })
-}
+})
