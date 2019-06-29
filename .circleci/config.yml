@@ -8,16 +8,14 @@ jobs:
     executor:
       name: node/default
     environment:
-      TEST_REPORTS: /tmp/test-reports
+      TEST_REPORTS     : /tmp/test-reports
+      JEST_JUNIT_OUTPUT: ${TEST_REPORTS}/jest/junit.xml
     steps:
       - checkout
       - node/with-cache:
           cache-key    : yarn.lock
           cache-version: v1
           steps:
-            - run:
-                name   : Prepare
-                command: mkdir $TEST_REPORTS
             - run:
                 name   : Install dependencies
                 command: yarn install
@@ -26,7 +24,7 @@ jobs:
                 command: yarn build
             - run:
                 name   : Run all Tests
-                command: yarn test
+                command: yarn test --ci --reporters=jest-junit
             - store_test_results:
                 path: /tmp/test-reports
 
