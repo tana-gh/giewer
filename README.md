@@ -1,5 +1,5 @@
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/tana-gh/giewer.svg)](VERSION)
-[![Build Status](https://travis-ci.org/tana-gh/giewer.svg?branch=master)](https://travis-ci.org/tana-gh/giewer)
+[![CircleCI](https://circleci.com/gh/tana-gh/giewer/tree/master.svg?style=svg)](https://circleci.com/gh/tana-gh/giewer/tree/master)
 [![GitHub](https://img.shields.io/github/license/tana-gh/giewer.svg)](LICENSE)
 
 # Giewer
