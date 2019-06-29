@@ -1,0 +1,32 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@1.1.2
+
+jobs:
+  build:
+    steps:
+      - checkout
+      - node/with-cache:
+        cache-key    : yarn.lock
+        cache-version: v1
+        steps:
+          - run:
+            name   : Install dependencies
+            command: yarn install
+          - run:
+            name   : Build project
+            command: yarn build
+  test:
+    steps:
+      - run:
+        name   : Run all Tests
+        command: yarn test
+
+workflows:
+  main:
+    jobs:
+      - build
+      - test:
+        requires:
+          - build
