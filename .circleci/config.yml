@@ -8,8 +8,7 @@ jobs:
     executor:
       name: node/default
     environment:
-      TEST_REPORTS     : /tmp/test-reports
-      JEST_JUNIT_OUTPUT: ${TEST_REPORTS}/jest/junit.xml
+      JEST_JUNIT_OUTPUT: /tmp/test-reports/jest/junit.xml
     steps:
       - checkout
       - node/with-cache:
