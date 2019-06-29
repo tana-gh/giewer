@@ -8,25 +8,25 @@ jobs:
     steps:
       - checkout
       - node/with-cache:
-        cache-key    : yarn.lock
-        cache-version: v1
-        steps:
-          - run:
-            name   : Install dependencies
-            command: yarn install
-          - run:
-            name   : Build project
-            command: yarn build
+          cache-key    : yarn.lock
+          cache-version: v1
+          steps:
+            - run:
+                name   : Install dependencies
+                command: yarn install
+            - run:
+                name   : Build project
+                command: yarn build
   test:
     steps:
       - run:
-        name   : Run all Tests
-        command: yarn test
+          name   : Run all Tests
+          command: yarn test
 
 workflows:
   main:
     jobs:
       - build
       - test:
-        requires:
-          - build
+          requires:
+            - build
