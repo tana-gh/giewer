@@ -16,6 +16,9 @@ jobs:
           cache-version: v1
           steps:
             - run:
+                name   : Prepare
+                command: mkdir $TEST_REPORTS
+            - run:
                 name   : Install dependencies
                 command: yarn install
             - run:
