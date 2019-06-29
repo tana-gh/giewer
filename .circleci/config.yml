@@ -19,18 +19,11 @@ jobs:
             - run:
                 name   : Build project
                 command: yarn build
-  test:
-    executor:
-      name: node/default
-    steps:
-      - run:
-          name   : Run all Tests
-          command: yarn test
+            - run:
+                name   : Run all Tests
+                command: yarn test
 
 workflows:
   main:
     jobs:
       - build
-      - test:
-          requires:
-            - build
