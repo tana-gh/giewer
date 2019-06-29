@@ -9,7 +9,7 @@ const loadedUrls = {
     themes: {}
 }
 
-export const appendAce = async (element: Element, mode?: string, theme?: string) => {
+export const bindAce = async (element: Element, mode?: string, theme?: string) => {
     if (element.classList.contains(C.aceEditorClass)) {
         return
     }
@@ -41,7 +41,7 @@ const loadScript = async (kind: 'ace' | 'mode' | 'theme', key: string | undefine
     return await new Promise((res, rej) => {
         const script  = document.createElement('script')
         script.src    = urls[kind][key]
-        script.onload = () => res()
+        script.addEventListener('load', () => res())
         document.body.appendChild(script)
     })
 }

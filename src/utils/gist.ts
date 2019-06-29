@@ -1,7 +1,7 @@
-import { xhr } from '@/utils/xhr'
+import * as XHR from '@/utils/xhr'
 
 export const fetchGistCode = async (gistId: string, fileName: string, timeout: number) => {
-    const json = await xhr(`https://api.github.com/gists/${gistId}`, timeout)
+    const json = await XHR.get(`https://api.github.com/gists/${gistId}`, timeout)
     const body = JSON.parse(json)
     
     if (!('files' in body)) {

@@ -1,5 +1,5 @@
 import MockXMLHttpRequest from 'mock-xmlhttprequest'
-import { fetchGistCode }  from '../../src/utils/gist'
+import * as Gist          from '../../src/utils/gist'
 
 describe('fetchGistCode', () => {
     it('should fetch content correctly', async () => {
@@ -17,7 +17,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const content = await fetchGistCode('test-id', 'test-filename', 0)
+        const content = await Gist.fetchGistCode('test-id', 'test-filename', 0)
         expect(content).toBe('test code')
 
         server.remove()
@@ -31,7 +31,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const promise = fetchGistCode('test-id', 'test-filename', 0)
+        const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
         await expect(promise).rejects.toEqual(new Error('syntax error'))
 
         server.remove()
@@ -52,7 +52,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const promise = fetchGistCode('test-id', 'test-filename', 0)
+        const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
         await expect(promise).rejects.toEqual(new Error('file not found'))
 
         server.remove()
@@ -72,7 +72,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const promise = fetchGistCode('test-id', 'test-filename', 0)
+        const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
         await expect(promise).rejects.toEqual(new Error('syntax error'))
 
         server.remove()
@@ -92,7 +92,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const promise = fetchGistCode('test-id', 'test-filename', 0)
+        const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
         await expect(promise).rejects.toEqual(new Error('syntax error'))
 
         server.remove()
@@ -113,7 +113,7 @@ describe('fetchGistCode', () => {
             }]
         }).install()
 
-        const promise = fetchGistCode('test-id', 'test-filename', 0)
+        const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
         await expect(promise).rejects.toEqual(new Error('content truncated'))
 
         server.remove()

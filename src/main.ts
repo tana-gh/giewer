@@ -1,6 +1,6 @@
 import '@/stylus/style.styl'
-import { createComponent } from '@/components/giewer'
+import * as Giewer from '@/components/giewer'
 
 window.addEventListener('load', () => {
-    createComponent('.giewer')
+    Giewer.initComponents('.giewer')
 })

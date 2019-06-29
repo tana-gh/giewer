@@ -1,6 +1,6 @@
 import $ = require('jquery')
-import { appendAce } from '../../src/components/ace'
-import * as C        from '../../src/utils/constants'
+import * as Ace from '../../src/components/ace'
+import * as C   from '../../src/utils/constants'
 
 describe('appendAce', () => {
     it('should be appended correctly', async () => {
@@ -11,7 +11,7 @@ describe('appendAce', () => {
         expect(body.children('script[src*="/ace.js"]')).toHaveLength(0)
 
         const appendAceSequence = async () => {
-            const promise = appendAce(editor.get(0))
+            const promise = Ace.bindAce(editor.get(0))
             const script  = body.children('script[src*="/ace.js"]').get(0)
             script.dispatchEvent(new Event('load'))
             await promise

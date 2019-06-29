@@ -1,5 +1,5 @@
 
-export const xhr = async (url: string, timeout: number): Promise<string> => {
+export const get = async (url: string, timeout: number): Promise<string> => {
     return await new Promise((res, rej) => {
         const req = new XMLHttpRequest()
         req.open('GET', url)

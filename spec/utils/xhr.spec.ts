@@ -1,5 +1,5 @@
 import MockXMLHttpRequest from 'mock-xmlhttprequest'
-import { xhr } from '../../src/utils/xhr'
+import * as XHR           from '../../src/utils/xhr'
 
 describe('xhr', () => {
     it('should get response', async () => {
@@ -10,7 +10,7 @@ describe('xhr', () => {
             }]
         }).install()
 
-        const content = await xhr('https://example.com/', 0)
+        const content = await XHR.get('https://example.com/', 0)
         expect(content).toBe('{ "test": "ok" }')
 
         server.remove()
@@ -23,7 +23,7 @@ describe('xhr', () => {
             }]
         }).install()
 
-        const promise = xhr('https://example.com/', 0)
+        const promise = XHR.get('https://example.com/', 0)
         await expect(promise).rejects.toEqual(new Error('404 Not Found'))
 
         server.remove()
@@ -36,7 +36,7 @@ describe('xhr', () => {
             }]
         }).install()
 
-        const promise = xhr('https://example.com/', 0)
+        const promise = XHR.get('https://example.com/', 0)
         await expect(promise).rejects.toEqual(new Error('xhr error'))
 
         server.remove()
@@ -49,7 +49,7 @@ describe('xhr', () => {
             }]
         }).install()
 
-        const promise = xhr('https://example.com/', 0)
+        const promise = XHR.get('https://example.com/', 0)
         await expect(promise).rejects.toEqual(new Error('timeout'))
 
         server.remove()
