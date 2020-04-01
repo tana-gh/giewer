@@ -1,5 +1,5 @@
-import MockXMLHttpRequest from 'mock-xmlhttprequest'
-import * as Gist          from '../../src/utils/gist'
+import MockXMLHttpRequest = require('mock-xmlhttprequest')
+import * as Gist from '../../src/utils/gist'
 
 describe('fetchGistCode', () => {
     it('should fetch content correctly', async () => {
