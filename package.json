@@ -41,7 +41,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.2.4",
     "jest-junit": "^10.0.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "mock-xmlhttprequest": "^6.0.0",
     "style-loader": "^1.1.3",
     "stylus": "^0.54.7",
