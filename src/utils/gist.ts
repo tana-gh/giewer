@@ -1,9 +1,9 @@
-import * as XHR from '@/utils/xhr'
+import * as XHR from './xhr'
 
 export const fetchGistCode = async (gistId: string, fileName: string, timeout: number) => {
     const json = await XHR.get(`https://api.github.com/gists/${gistId}`, timeout)
     const body = JSON.parse(json)
-    
+
     if (!('files' in body)) {
         throw new Error('syntax error')
     }
@@ -23,6 +23,6 @@ export const fetchGistCode = async (gistId: string, fileName: string, timeout: n
     if (file.truncated) {
         throw new Error('content truncated')
     }
-    
+
     return file.content
 }

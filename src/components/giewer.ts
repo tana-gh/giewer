@@ -1,9 +1,8 @@
 import * as Ace  from './ace'
-import * as Gist from '@/utils/gist'
-import * as Log  from '@/utils/log'
-import * as C    from '@/utils/constants'
-
-declare var ace
+import * as Gist from '../utils/gist'
+import * as Log  from '../utils/log'
+import * as Urls from '../utils/urls'
+import * as C    from '../utils/constants'
 
 export const initComponents = (selector: string) => {
     const targets = document.querySelectorAll(selector)
@@ -42,11 +41,24 @@ const initOneComponent = async (el: HTMLElement) => {
 }
 
 const bindAceToElement = async (el: HTMLElement) => {
-    const mode  = el.dataset.mode
-    const theme = el.dataset.theme
+    let mode = el.dataset.mode
+    if (mode === '') mode = undefined
+
+    if (mode !== undefined && !Urls.isModeKey(mode)) {
+        Log.error(`Invalid mode ${mode}.\n`)
+        return
+    }
+
+    let theme = el.dataset.theme
+    if (theme === '') theme = undefined
+    
+    if (theme !== undefined && !Urls.isThemeKey(theme)) {
+        Log.error(`Invalid theme ${theme}.\n`)
+        return
+    }
 
     try {
-        await Ace.bindAce(el, mode === null ? undefined : mode, theme === null ? undefined : theme)
+        await Ace.bindAce(el, mode, theme)
     }
     catch (e) {
         insertText(el, `${e}\n`)
@@ -89,8 +101,16 @@ const initGist = async (el: HTMLElement) => {
     }
 }
 
-const insertText = (el: HTMLElement, message) => {
-    const editor = ace.edit(el)
-    editor.navigateFileEnd()
-    editor.insert(message)
+const insertText = (el: HTMLElement, message: string) => {
+    const editor = window.ace?.edit && window.ace.edit(el)
+
+    if (editor) {
+        editor.selectAll()
+        editor.insert('')
+        editor.navigateFileEnd()
+        editor.insert(message)
+    }
+    else {
+        console.log(message)
+    }
 }
