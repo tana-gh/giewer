@@ -5,15 +5,6 @@ const HtmlWebpackPlugin    = require('html-webpack-plugin')
 const Sass   = require('sass')
 const Fibers = require('fibers')
 
-let ElmLoader = undefined
-try { ElmLoader = require('elm-webpack-loader') } catch {}
-
-let VueLoader = undefined
-try { VueLoader = require('vue-loader') } catch {}
-
-let SvelteLoader = undefined
-try { SvelteLoader = require('svelte-loader') } catch {}
-
 const PATHS = {
     root  : path.join(__dirname, '..'),
     src   : path.join(__dirname, '../src'),
@@ -21,24 +12,16 @@ const PATHS = {
     assets: path.join(__dirname, '../assets')
 }
 
-const TARGETS = process.env.IS_ELECTRON ? {
-    main    : 'electron-main',
-    renderer: 'electron-renderer'
-} : {
+const TARGETS = {
     main: 'web'
 }
 
-const ENTRIES = process.env.IS_ELECTRON ? {
-    main    : path.join(PATHS.src, 'main'),
-    renderer: path.join(PATHS.src, 'renderer')
-} : {
+const ENTRIES = {
     main: PATHS.src
 }
 
 const PAGES_DIR = `${PATHS.assets}/html`
-const PAGES = process.env.IS_ELECTRON ? {
-    renderer: 'index.html'
-} : {
+const PAGES = {
     main: 'index.html'
 }
 
@@ -59,11 +42,8 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
     } : {}),
     resolve: {
         extensions: [ '.js', '.jsx', '.ts', '.tsx', 'json' ],
-        ...(SvelteLoader ? { mainFields: ['svelte', 'browser', 'module', 'main'] } : {}),
         alias: {
-            '~': PATHS.src,
-            ...(VueLoader ? { vue$: 'vue/dist/vue.js' } : {}),
-            ...(SvelteLoader ? { svelte: path.resolve('node_modules', 'svelte') } : {})
+            '~': PATHS.src
         }
     },
     optimization: {
@@ -93,59 +73,14 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
                 use: [
                     'cache-loader',
                     'babel-loader',
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            ...(VueLoader ? { appendTsSuffixTo: [/\.vue$/] } : {})
-                        }
-                    }
+                    'ts-loader'
                 ]
             },
-            ...(ElmLoader ? [{
-                test: /\.elm$/,
-                use: [
-                    'cache-loader',
-                    'elm-hot-webpack-loader',
-                    {
-                        loader: 'elm-webpack-loader',
-                        options: {
-                            cwd     : PATHS.root,
-                            optimize: mode === 'production'
-                        }
-                    }
-                ]
-            }] : []),
-            ...(VueLoader ? [{
-                test: /\.vue$/,
-                use: [
-                    'cache-loader',
-                    'vue-loader'
-                ]
-            }] : []),
-            ...(SvelteLoader ? [{
-                test: /\.svelte$/,
-                use: [
-                    'cache-loader',
-                    'babel-loader',
-                    {
-                        loader: 'svelte-loader',
-                        options: {
-                            preprocess: require('svelte-preprocess')({
-                                typescript: true,
-                                postcss   : true,
-                                sass      : true,
-                                scss      : true
-                            })
-                        }
-                    }
-                ],
-                exclude: /node_modules/
-            }] : []),
             {
                 test: /\.css$/,
                 use: [
                     'cache-loader',
-                    VueLoader ? 'vue-style-loader' : 'style-loader',
+                    'style-loader',
                     MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
@@ -161,7 +96,7 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
                 test: /\.sass$/,
                 use: [
                     'cache-loader',
-                    VueLoader ? 'vue-style-loader' : 'style-loader',
+                    'style-loader',
                     MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
@@ -175,10 +110,10 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
                         loader: 'sass-loader',
                         options: {
                             sourceMap     : true,
-                            implementation: require('sass'),
+                            implementation: Sass,
                             sassOptions   : {
                                 indentedSyntax: true,
-                                fiber: require('fibers')
+                                fiber: Fibers
                             }
                         }
                     }
@@ -188,7 +123,7 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
                 test: /\.scss$/,
                 use: [
                     'cache-loader',
-                    VueLoader ? 'vue-style-loader' : 'style-loader',
+                    'style-loader',
                     MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
@@ -237,8 +172,6 @@ module.exports = mode => Object.entries(TARGETS).map(([ key, target ]) => ({
         ]
     },
     plugins: [
-        ...(VueLoader ? [new VueLoader.VueLoaderPlugin()] : []),
-
         new MiniCssExtractPlugin({
             filename: 'assets/css/[name].css'
         }),
