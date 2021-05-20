@@ -9,7 +9,7 @@ declare global {
 
 const loadedKeys = <(Urls.AceKey | Urls.ModeKey | Urls.ThemeKey)[]>[]
 
-export const bindAce = async (element: Element, mode?: Urls.ModeKey, theme?: Urls.ThemeKey) => {
+export const bindAce = async (element: Element, mode?: Urls.ModeKey, theme?: Urls.ThemeKey): Promise<void> => {
     if (element.classList.contains(C.aceEditorClass)) {
         return
     }
@@ -46,7 +46,7 @@ const loadScript = async (key: Urls.AceKey | Urls.ModeKey | Urls.ThemeKey, url: 
 
     loadedKeys.push(key)
 
-    return await new Promise((res, rej) => {
+    return await new Promise<void>((res, rej) => {
         const script = document.createElement('script')
         script.src   = url
         script.addEventListener('load', () => res())

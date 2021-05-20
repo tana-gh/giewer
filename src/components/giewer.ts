@@ -4,7 +4,7 @@ import * as Log  from '../utils/log'
 import * as Urls from '../utils/urls'
 import * as C    from '../utils/constants'
 
-export const initComponents = (selector: string) => {
+export const initComponents = (selector: string): void => {
     const targets = document.querySelectorAll(selector)
     targets.forEach(async el => await initOneComponent(<HTMLElement>el))
 }
