@@ -6,7 +6,7 @@ import * as C    from '../utils/constants'
 
 export const initComponents = (selector: string): void => {
     const targets = document.querySelectorAll(selector)
-    targets.forEach(async el => await initOneComponent(<HTMLElement>el))
+    targets.forEach(async el => await initOneComponent(el as HTMLElement))
 }
 
 const initOneComponent = async (el: HTMLElement) => {

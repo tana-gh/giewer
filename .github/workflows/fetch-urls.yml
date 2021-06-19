@@ -1,6 +1,8 @@
-name: main
+name: fetch-urls
 
-on: [push, pull_request]
+on:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -26,12 +28,13 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Yarn Install
         run: yarn install
+      - name: Run Script (fetch-urls)
+        run: yarn fetch-urls
       - name: Run Tests
         run: yarn test
-      - name: Build
-        run: yarn build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          branch: create-pull-request/fetch-urls
+          delete-branch: true
+          title: Changes by fetch-urls workflow
