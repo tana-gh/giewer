@@ -6,10 +6,10 @@ const Sass   = require('sass')
 const Fibers = require('fibers')
 
 const PATHS = {
-    root  : path.join(__dirname, '../..'),
-    src   : path.join(__dirname, '../../src'),
-    dist  : path.join(__dirname, '../../dist'),
-    assets: path.join(__dirname, '../../assets')
+    root  : path.join(__dirname, '..'),
+    src   : path.join(__dirname, '../src'),
+    dist  : path.join(__dirname, '../dist'),
+    assets: path.join(__dirname, '../assets')
 }
 
 const TARGETS = {
