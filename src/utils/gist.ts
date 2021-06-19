@@ -1,6 +1,6 @@
 import * as XHR from './xhr'
 
-export const fetchGistCode = async (gistId: string, fileName: string, timeout: number) => {
+export const fetchGistCode = async (gistId: string, fileName: string, timeout: number): Promise<string | never> => {
     const json = await XHR.get(`https://api.github.com/gists/${gistId}`, timeout)
     const body = JSON.parse(json)
 

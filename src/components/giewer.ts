@@ -24,7 +24,7 @@ const initOneComponent = async (el: HTMLElement) => {
         return
     }
 
-    let content: string
+    let content: string | undefined
 
     if (service === C.services.github) {
         content = await initGithub(el)
@@ -37,7 +37,7 @@ const initOneComponent = async (el: HTMLElement) => {
         return
     }
 
-    insertText(el, content)
+    if (content !== undefined) insertText(el, content)
 }
 
 const bindAceToElement = async (el: HTMLElement) => {
