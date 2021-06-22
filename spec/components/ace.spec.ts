@@ -9,7 +9,7 @@ describe('appendAce', () => {
         expect(editor.children).toHaveLength(0)
         expect(body.querySelectorAll('script[src*="/ace.min.js"]')).toHaveLength(0)
 
-        const urls = await Urls.loadUrls()
+        const urls = await Urls.loadUrls(30000)
 
         const appendAceSequence = async () => {
             const promise = Ace.bindAce(editor, urls)
