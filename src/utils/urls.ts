@@ -1,224 +1,64 @@
+import * as XHR from '../utils/xhr'
 
-export const ace = {
-    ace: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.min.js'
+export type Urls = {
+    ace   : string,
+    modes : Record<string, string>,
+    themes: Record<string, string>
 }
 
-export const modes = {
-    abap             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-abap.min.js',
-    abc              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-abc.min.js',
-    actionscript     : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-actionscript.min.js',
-    ada              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ada.min.js',
-    apache_conf      : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-apache_conf.min.js',
-    apex             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-apex.min.js',
-    applescript      : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-applescript.min.js',
-    asciidoc         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-asciidoc.min.js',
-    asl              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-asl.min.js',
-    assembly_x86     : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-assembly_x86.min.js',
-    autohotkey       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-autohotkey.min.js',
-    batchfile        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-batchfile.min.js',
-    bro              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-bro.min.js',
-    c_cpp            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-c_cpp.min.js',
-    c9search         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-c9search.min.js',
-    cirru            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-cirru.min.js',
-    clojure          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-clojure.min.js',
-    cobol            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-cobol.min.js',
-    coffee           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-coffee.min.js',
-    coldfusion       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-coldfusion.min.js',
-    csharp           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-csharp.min.js',
-    csound_document  : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-csound_document.min.js',
-    csound_orchestra : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-csound_orchestra.min.js',
-    csound_score     : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-csound_score.min.js',
-    csp              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-csp.min.js',
-    css              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-css.min.js',
-    curly            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-curly.min.js',
-    d                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-d.min.js',
-    dart             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-dart.min.js',
-    diff             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-diff.min.js',
-    django           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-django.min.js',
-    dockerfile       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-dockerfile.min.js',
-    dot              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-dot.min.js',
-    drools           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-drools.min.js',
-    edifact          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-edifact.min.js',
-    eiffel           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-eiffel.min.js',
-    ejs              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ejs.min.js',
-    elixir           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-elixir.min.js',
-    elm              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-elm.min.js',
-    erlang           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-erlang.min.js',
-    forth            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-forth.min.js',
-    fortran          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-fortran.min.js',
-    fsharp           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-fsharp.min.js',
-    fsl              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-fsl.min.js',
-    ftl              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ftl.min.js',
-    gcode            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-gcode.min.js',
-    gherkin          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-gherkin.min.js',
-    gitignore        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-gitignore.min.js',
-    glsl             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-glsl.min.js',
-    gobstones        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-gobstones.min.js',
-    golang           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-golang.min.js',
-    graphqlschema    : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-graphqlschema.min.js',
-    groovy           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-groovy.min.js',
-    haml             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-haml.min.js',
-    handlebars       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-handlebars.min.js',
-    haskell_cabal    : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-haskell_cabal.min.js',
-    haskell          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-haskell.min.js',
-    haxe             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-haxe.min.js',
-    hjson            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-hjson.min.js',
-    html_elixir      : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-html_elixir.min.js',
-    html_ruby        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-html_ruby.min.js',
-    html             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-html.min.js',
-    ini              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ini.min.js',
-    io               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-io.min.js',
-    jack             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jack.min.js',
-    jade             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jade.min.js',
-    java             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-java.min.js',
-    javascript       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-javascript.min.js',
-    json             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-json.min.js',
-    jsoniq           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jsoniq.min.js',
-    jsp              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jsp.min.js',
-    jssm             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jssm.min.js',
-    jsx              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-jsx.min.js',
-    julia            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-julia.min.js',
-    kotlin           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-kotlin.min.js',
-    latex            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-latex.min.js',
-    less             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-less.min.js',
-    liquid           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-liquid.min.js',
-    lisp             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-lisp.min.js',
-    livescript       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-livescript.min.js',
-    logiql           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-logiql.min.js',
-    logtalk          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-logtalk.min.js',
-    lsl              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-lsl.min.js',
-    lua              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-lua.min.js',
-    luapage          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-luapage.min.js',
-    lucene           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-lucene.min.js',
-    makefile         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-makefile.min.js',
-    markdown         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-markdown.min.js',
-    mask             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-mask.min.js',
-    matlab           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-matlab.min.js',
-    maze             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-maze.min.js',
-    mel              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-mel.min.js',
-    mixal            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-mixal.min.js',
-    mushcode         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-mushcode.min.js',
-    mysql            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-mysql.min.js',
-    nix              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-nix.min.js',
-    nsis             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-nsis.min.js',
-    objectivec       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-objectivec.min.js',
-    ocaml            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ocaml.min.js',
-    pascal           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-pascal.min.js',
-    perl             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-perl.min.js',
-    perl6            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-perl6.min.js',
-    pgsql            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-pgsql.min.js',
-    php_laravel_blade: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-php_laravel_blade.min.js',
-    php              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-php.min.js',
-    pig              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-pig.min.js',
-    plain_text       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-plain_text.min.js',
-    powershell       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-powershell.min.js',
-    praat            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-praat.min.js',
-    prolog           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-prolog.min.js',
-    properties       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-properties.min.js',
-    protobuf         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-protobuf.min.js',
-    puppet           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-puppet.min.js',
-    python           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-python.min.js',
-    r                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-r.min.js',
-    razor            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-razor.min.js',
-    rdoc             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-rdoc.min.js',
-    red              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-red.min.js',
-    redshift         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-redshift.min.js',
-    rhtml            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-rhtml.min.js',
-    rst              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-rst.min.js',
-    ruby             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-ruby.min.js',
-    rust             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-rust.min.js',
-    sass             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sass.min.js',
-    scad             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-scad.min.js',
-    scala            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-scala.min.js',
-    scheme           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-scheme.min.js',
-    scss             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-scss.min.js',
-    sh               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sh.min.js',
-    sjs              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sjs.min.js',
-    slim             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-slim.min.js',
-    smarty           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-smarty.min.js',
-    snippets         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-snippets.min.js',
-    soy_template     : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-soy_template.min.js',
-    space            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-space.min.js',
-    sparql           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sparql.min.js',
-    sql              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sql.min.js',
-    sqlserver        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-sqlserver.min.js',
-    stylus           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-stylus.min.js',
-    svg              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-svg.min.js',
-    swift            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-swift.min.js',
-    tcl              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-tcl.min.js',
-    terraform        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-terraform.min.js',
-    tex              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-tex.min.js',
-    text             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-text.min.js',
-    textile          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-textile.min.js',
-    toml             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-toml.min.js',
-    tsx              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-tsx.min.js',
-    turtle           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-turtle.min.js',
-    twig             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-twig.min.js',
-    typescript       : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-typescript.min.js',
-    vala             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-vala.min.js',
-    vbscript         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-vbscript.min.js',
-    velocity         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-velocity.min.js',
-    verilog          : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-verilog.min.js',
-    vhdl             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-vhdl.min.js',
-    visualforce      : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-visualforce.min.js',
-    wollok           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-wollok.min.js',
-    xml              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-xml.min.js',
-    xquery           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-xquery.min.js',
-    yaml             : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/mode-yaml.min.js'
+export const loadUrls = async (timeout: number): Promise<Urls> => {
+    const origin  = 'https://api.cdnjs.com'
+
+    const versions: { versions: string[] } =
+        JSON.parse(await XHR.get(`${origin}/libraries/ace?fields=versions`, timeout))
+    const latest =
+        versions.versions
+            .map(v => v.split('.'))
+            .filter(vs => vs.length === 3)
+            .map(vs => vs.map(v => Number.parseInt(v)))
+            .filter(vs => vs.filter(v => isNaN(v)).length === 0)
+            .reduce((vs0, vs1) =>
+                vs0[0] > vs1[0] ? vs0 :
+                vs0[0] < vs1[0] ? vs1 :
+                vs0[1] > vs1[1] ? vs0 :
+                vs0[1] < vs1[1] ? vs1 :
+                vs0[2] > vs1[2] ? vs0 : vs1)
+            .join('.')
+    
+    const files: { files: string[] } =
+        JSON.parse(await XHR.get(`${origin}/libraries/ace/${latest}?fields=files`, timeout))
+    const minjs = files.files.filter(name => name.endsWith('.min.js'))
+    const modes  = minjs.filter(name => name.startsWith('mode-'))
+    const themes = minjs.filter(name => name.startsWith('theme-'))
+
+    const modeNames  = modes .map(name => name.replace(/^mode-/ , '').replace(/.min.js$/, ''))
+    const themeNames = themes.map(name => name.replace(/^theme-/, '').replace(/.min.js$/, ''))
+
+    const url = 'https://cdnjs.cloudflare.com/ajax/libs/ace'
+    const modeUrls  = modes .map(name => `${url}/${latest}/${name}`)
+    const themeUrls = themes.map(name => `${url}/${latest}/${name}`)
+
+    const modesObj: { [name: string]: string } = {}
+    for (let i = 0; i < modeNames.length; i++) {
+        Object.assign(modesObj, { [modeNames[i]]: modeUrls[i] })
+    }
+
+    const themesObj: { [name: string]: string } = {}
+    for (let i = 0; i < themeNames.length; i++) {
+        Object.assign(themesObj, { [themeNames[i]]: themeUrls[i] })
+    }
+
+    return {
+        ace   : `${url}/${latest}/ace.min.js`,
+        modes : modesObj,
+        themes: themesObj
+    }
 }
 
-export const themes = {
-    ambiance               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-ambiance.min.js',
-    chaos                  : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-chaos.min.js',
-    chrome                 : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-chrome.min.js',
-    clouds_midnight        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-clouds_midnight.min.js',
-    clouds                 : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-clouds.min.js',
-    cobalt                 : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-cobalt.min.js',
-    crimson_editor         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-crimson_editor.min.js',
-    dawn                   : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-dawn.min.js',
-    dracula                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-dracula.min.js',
-    dreamweaver            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-dreamweaver.min.js',
-    eclipse                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-eclipse.min.js',
-    github                 : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-github.min.js',
-    gob                    : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-gob.min.js',
-    gruvbox                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-gruvbox.min.js',
-    idle_fingers           : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-idle_fingers.min.js',
-    iplastic               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-iplastic.min.js',
-    katzenmilch            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-katzenmilch.min.js',
-    kr_theme               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-kr_theme.min.js',
-    kuroir                 : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-kuroir.min.js',
-    merbivore_soft         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-merbivore_soft.min.js',
-    merbivore              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-merbivore.min.js',
-    mono_industrial        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-mono_industrial.min.js',
-    monokai                : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-monokai.min.js',
-    pastel_on_dark         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-pastel_on_dark.min.js',
-    solarized_dark         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-solarized_dark.min.js',
-    solarized_light        : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-solarized_light.min.js',
-    sqlserver              : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-sqlserver.min.js',
-    terminal               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-terminal.min.js',
-    textmate               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-textmate.min.js',
-    tomorrow_night_blue    : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-tomorrow_night_blue.min.js',
-    tomorrow_night_bright  : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-tomorrow_night_bright.min.js',
-    tomorrow_night_eighties: 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-tomorrow_night_eighties.min.js',
-    tomorrow_night         : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-tomorrow_night.min.js',
-    tomorrow               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-tomorrow.min.js',
-    twilight               : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-twilight.min.js',
-    vibrant_ink            : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-vibrant_ink.min.js',
-    xcode                  : 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/theme-xcode.min.js'
-}
-
-export type Ace    = typeof ace
-export type Modes  = typeof modes
-export type Themes = typeof themes
-
-export type AceKey   = keyof Ace
-export type ModeKey  = keyof Modes
-export type ThemeKey = keyof Themes
-
-export const isModeKey = (key: string | undefined): key is ModeKey => {
+export const isModeKey = (modes : Record<string, string>, key: string): boolean => {
     return !!key && (key in modes)
 }
 
-export const isThemeKey = (key: string | undefined): key is ThemeKey => {
+export const isThemeKey = (themes: Record<string, string>, key: string): boolean => {
     return !!key && (key in themes)
 }

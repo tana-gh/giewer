@@ -32,7 +32,7 @@ describe('fetchGistCode', () => {
         }).install()
 
         const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
-        await expect(promise).rejects.toEqual(new Error('syntax error'))
+        await expect(promise).rejects.toEqual(new Error('JSON syntax error.'))
 
         server.remove()
     })
@@ -53,7 +53,7 @@ describe('fetchGistCode', () => {
         }).install()
 
         const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
-        await expect(promise).rejects.toEqual(new Error('file not found'))
+        await expect(promise).rejects.toEqual(new Error('File not found.'))
 
         server.remove()
     })
@@ -73,7 +73,7 @@ describe('fetchGistCode', () => {
         }).install()
 
         const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
-        await expect(promise).rejects.toEqual(new Error('syntax error'))
+        await expect(promise).rejects.toEqual(new Error('JSON syntax error.'))
 
         server.remove()
     })
@@ -93,7 +93,7 @@ describe('fetchGistCode', () => {
         }).install()
 
         const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
-        await expect(promise).rejects.toEqual(new Error('syntax error'))
+        await expect(promise).rejects.toEqual(new Error('JSON syntax error.'))
 
         server.remove()
     })
@@ -114,7 +114,7 @@ describe('fetchGistCode', () => {
         }).install()
 
         const promise = Gist.fetchGistCode('test-id', 'test-filename', 0)
-        await expect(promise).rejects.toEqual(new Error('content truncated'))
+        await expect(promise).rejects.toEqual(new Error('Content truncated.'))
 
         server.remove()
     })

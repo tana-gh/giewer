@@ -5,23 +5,23 @@ export const fetchGistCode = async (gistId: string, fileName: string, timeout: n
     const body = JSON.parse(json)
 
     if (!('files' in body)) {
-        throw new Error('syntax error')
+        throw new Error('JSON syntax error.')
     }
 
     const files = body.files
 
     if (!(fileName in files)) {
-        throw new Error('file not found')
+        throw new Error('File not found.')
     }
 
     const file = files[fileName]
 
     if (!('truncated' in file && 'content' in file)) {
-        throw new Error('syntax error')
+        throw new Error('JSON syntax error.')
     }
 
     if (file.truncated) {
-        throw new Error('content truncated')
+        throw new Error('Content truncated.')
     }
 
     return file.content

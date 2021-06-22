@@ -7,16 +7,16 @@ declare global {
     }
 }
 
-const loadedKeys = <(Urls.AceKey | Urls.ModeKey | Urls.ThemeKey)[]>[]
+const loadedKeys = [] as string[]
 
-export const bindAce = async (element: Element, mode?: Urls.ModeKey, theme?: Urls.ThemeKey): Promise<void> => {
+export const bindAce = async (element: Element, urls: Urls.Urls, mode?: string, theme?: string): Promise<void> => {
     if (element.classList.contains(C.aceEditorClass)) {
         return
     }
 
-    await loadAceScript('ace')
-    if (mode ) await loadModesScript (mode)
-    if (theme) await loadThemesScript(theme)
+    await loadAceScript(urls.ace, 'ace')
+    if (mode ) await loadModesScript (urls.modes , mode)
+    if (theme) await loadThemesScript(urls.themes, theme)
 
     if (window.ace === undefined) {
         return
@@ -27,19 +27,19 @@ export const bindAce = async (element: Element, mode?: Urls.ModeKey, theme?: Url
     if (theme) editor.setTheme(`ace/theme/${theme}`)
 }
 
-const loadAceScript = async (key: Urls.AceKey) => {
-    await loadScript(key, Urls.ace[key])
+const loadAceScript = async (ace: string, key: string) => {
+    await loadScript(key, ace)
 }
 
-const loadModesScript = async (key: Urls.ModeKey) => {
-    await loadScript(key, Urls.modes[key])
+const loadModesScript = async (modes: Record<string, string>, key: string) => {
+    await loadScript(key, modes[key])
 }
 
-const loadThemesScript = async (key: Urls.ThemeKey) => {
-    await loadScript(key, Urls.themes[key])
+const loadThemesScript = async (themes: Record<string, string>, key: string) => {
+    await loadScript(key, themes[key])
 }
 
-const loadScript = async (key: Urls.AceKey | Urls.ModeKey | Urls.ThemeKey, url: string) => {
+const loadScript = async (key: string, url: string) => {
     if (loadedKeys.find(k => k === key) !== undefined) {
         return
     }

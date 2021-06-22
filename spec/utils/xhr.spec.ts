@@ -24,7 +24,7 @@ describe('xhr', () => {
         }).install()
 
         const promise = XHR.get('https://example.com/', 0)
-        await expect(promise).rejects.toEqual(new Error('404 Not Found'))
+        await expect(promise).rejects.toEqual(new Error('404 Not Found.'))
 
         server.remove()
     })
@@ -37,7 +37,7 @@ describe('xhr', () => {
         }).install()
 
         const promise = XHR.get('https://example.com/', 0)
-        await expect(promise).rejects.toEqual(new Error('xhr error'))
+        await expect(promise).rejects.toEqual(new Error('XHR error.'))
 
         server.remove()
     })
@@ -50,7 +50,7 @@ describe('xhr', () => {
         }).install()
 
         const promise = XHR.get('https://example.com/', 0)
-        await expect(promise).rejects.toEqual(new Error('timeout'))
+        await expect(promise).rejects.toEqual(new Error('Timeout.'))
 
         server.remove()
     })

@@ -10,7 +10,6 @@
   "author": "tana",
   "license": "MIT",
   "scripts": {
-    "fetch-urls": "node scripts/fetch-urls.mjs > assets/misc/urls.json",
     "test": "jest",
     "dev": "webpack serve --config ./build/webpack.dev.config.js",
     "build": "rm -rf dist/* && webpack --config ./build/webpack.prod.config.js && (if [ -e LICENSE ]; then cp LICENSE dist; fi) && yarn licenses list > THIRD_PARTY && cp THIRD_PARTY dist"

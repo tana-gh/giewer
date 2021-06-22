@@ -10,85 +10,85 @@ export const initComponents = (selector: string): void => {
 }
 
 const initOneComponent = async (el: HTMLElement) => {
-    await bindAceToElement(el)
+    const timeoutStr = el.getAttribute('timeout')
+    const timeout    = timeoutStr ? parseInt(timeoutStr) : C.timeout
+
+    const urls = await Urls.loadUrls(timeout)
+
+    await bindAceToElement(el, urls)
     
     if (!el.classList.contains(C.aceEditorClass)) {
         Log.error('Failed to bind ace editor.')
         return
     }
 
-    const service = el.dataset.service
-
-    if (!service) {
-        insertText(el, `'data-service' attribute not found.\n`)
-        return
-    }
+    const service = el.getAttribute('service') ?? undefined
 
     let content: string | undefined
 
     if (service === C.services.github) {
-        content = await initGithub(el)
+        content = await initGithub(el, timeout)
     }
     else if (service === C.services.gist) {
-        content = await initGist(el)
+        content = await initGist(el, timeout)
+    }
+    else if (service === C.services.raw || !service) {
+        content = undefined
     }
     else {
-        insertText(el, 'Invalid service name.\n')
+        insertError(el, new Error('Invalid service name.'))
         return
     }
 
     if (content !== undefined) insertText(el, content)
 }
 
-const bindAceToElement = async (el: HTMLElement) => {
-    let mode = el.dataset.mode
-    if (mode === '') mode = undefined
+const bindAceToElement = async (el: HTMLElement, urls: Urls.Urls) => {
+    let mode = el.getAttribute('mode') ?? undefined
+    if (!mode) mode = undefined
 
-    if (mode !== undefined && !Urls.isModeKey(mode)) {
-        Log.error(`Invalid mode ${mode}.\n`)
+    if (mode !== undefined && !Urls.isModeKey(urls.modes, mode)) {
+        Log.error(`Invalid mode ${mode}.`)
         return
     }
 
-    let theme = el.dataset.theme
-    if (theme === '') theme = undefined
+    let theme = el.getAttribute('theme') ?? undefined
+    if (!theme) theme = undefined
     
-    if (theme !== undefined && !Urls.isThemeKey(theme)) {
-        Log.error(`Invalid theme ${theme}.\n`)
+    if (theme !== undefined && !Urls.isThemeKey(urls.themes, theme)) {
+        Log.error(`Invalid theme ${theme}.`)
         return
     }
 
     try {
-        await Ace.bindAce(el, mode, theme)
+        await Ace.bindAce(el, urls, mode, theme)
     }
     catch (e) {
-        insertText(el, `${e}\n`)
+        insertError(el, e)
     }
 }
 
-const initGithub = async (el: HTMLElement) => {
+const initGithub = async (el: HTMLElement, timeout: number) => {
     return ''
 }
 
-const initGist = async (el: HTMLElement) => {
-    const gistId = el.dataset.gistid
+const initGist = async (el: HTMLElement, timeout: number) => {
+    const gistId = el.getAttribute('gistid') ?? undefined
 
     if (!gistId) {
-        insertText(el, `'data-gistid' attribute not found.\n`)
+        insertError(el, new Error(`'gistid' attribute not found.`))
         return
     }
 
-    const fileName = el.dataset.filename
+    const fileName = el.getAttribute('filename')
 
     if (!fileName) {
-        insertText(el, `'data-filename' attribute not found.\n`)
+        insertError(el, new Error(`'filename' attribute not found.`))
         return
     }
 
-    const timeoutStr = el.dataset.timeout
-    const timeout    = timeoutStr ? parseInt(timeoutStr) : C.timeout
-
     if (Number.isNaN(timeout)) {
-        insertText(el, 'Invalid timeout value.\n')
+        insertError(el, new Error('Invalid timeout value.'))
         return
     }
 
@@ -96,8 +96,8 @@ const initGist = async (el: HTMLElement) => {
         return await Gist.fetchGistCode(gistId, fileName, timeout)
     }
     catch (e) {
-        insertText(el, `${e}\n`)
-        return ''
+        insertError(el, e)
+        return
     }
 }
 
@@ -111,6 +111,20 @@ const insertText = (el: HTMLElement, message: string) => {
         editor.insert(message)
     }
     else {
-        console.log(message)
+        Log.error('Editor not found.')
+    }
+}
+
+const insertError = (el: HTMLElement, error: Error) => {
+    const editor = window.ace?.edit && window.ace.edit(el)
+
+    if (editor) {
+        editor.selectAll()
+        editor.insert('')
+        editor.navigateFileEnd()
+        editor.insert(`${error}\n`)
+    }
+    else {
+        Log.error(error.message)
     }
 }

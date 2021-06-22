@@ -9,14 +9,14 @@ export const get = async (url: string, timeout: number): Promise<string> => {
                 res(req.responseText)
             }
             else {
-                rej(new Error(`${req.status} ${req.statusText}`))
+                rej(new Error(`${req.status} ${req.statusText}.`))
             }
         }
         req.onerror = () => {
-            rej(new Error('xhr error'))
+            rej(new Error('XHR error.'))
         }
         req.ontimeout = () => {
-            rej(new Error('timeout'))
+            rej(new Error('Timeout.'))
         }
         req.send(null)
     })
