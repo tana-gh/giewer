@@ -1,9 +1,8 @@
 @import "../font/font.scss";
 
-$h: 1.2em;
-
 .giewer {
-    width      : 60%;
-    height     : $h * 20;
-    line-height: $h;
+    width : 600px;
+    height: 300px;
+    font-family: 'Noto Mono';
+    font-size  : 14px
 }

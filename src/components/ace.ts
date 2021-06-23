@@ -9,7 +9,12 @@ declare global {
 
 const loadedKeys = [] as string[]
 
-export const bindAce = async (element: Element, urls: Urls.Urls, mode?: string, theme?: string): Promise<void> => {
+export const bindAce = async (
+    element: Element,
+    urls   : Urls.Urls,
+    mode?  : string,
+    theme? : string
+): Promise<void> => {
     if (element.classList.contains(C.aceEditorClass)) {
         return
     }
@@ -25,6 +30,8 @@ export const bindAce = async (element: Element, urls: Urls.Urls, mode?: string, 
     const editor = window.ace.edit(element)
     if (mode ) editor.session.setMode(`ace/mode/${mode}`)
     if (theme) editor.setTheme(`ace/theme/${theme}`)
+
+    editor.setShowPrintMargin(false)
 }
 
 const loadAceScript = async (ace: string, key: string) => {

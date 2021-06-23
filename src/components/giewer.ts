@@ -4,12 +4,12 @@ import * as Log  from '../utils/log'
 import * as Urls from '../utils/urls'
 import * as C    from '../utils/constants'
 
-export const initComponents = (selector: string): void => {
+export const initComponents = async (selector: string): Promise<void> => {
     const targets = document.querySelectorAll(selector)
     targets.forEach(async el => await initOneComponent(el as HTMLElement))
 }
 
-const initOneComponent = async (el: HTMLElement) => {
+export const initOneComponent = async (el: HTMLElement): Promise<void> => {
     const timeoutStr = el.getAttribute('timeout')
     const timeout    = timeoutStr ? parseInt(timeoutStr) : C.timeout
 
@@ -45,19 +45,19 @@ const initOneComponent = async (el: HTMLElement) => {
 
 const bindAceToElement = async (el: HTMLElement, urls: Urls.Urls) => {
     let mode = el.getAttribute('mode') ?? undefined
-    if (!mode) mode = undefined
+    if (!mode) mode = 'text'
 
-    if (mode !== undefined && !Urls.isModeKey(urls.modes, mode)) {
-        Log.error(`Invalid mode ${mode}.`)
-        return
+    if (!Urls.isModeKey(urls.modes, mode)) {
+        insertError(el, new Error(`Invalid mode ${mode}.`))
+        mode = 'text'
     }
 
     let theme = el.getAttribute('theme') ?? undefined
-    if (!theme) theme = undefined
+    if (!theme) theme = 'tomorrow_night'
     
-    if (theme !== undefined && !Urls.isThemeKey(urls.themes, theme)) {
-        Log.error(`Invalid theme ${theme}.`)
-        return
+    if (!Urls.isThemeKey(urls.themes, theme)) {
+        insertError(el, new Error(`Invalid theme ${theme}.`))
+        theme = 'tomorrow_night'
     }
 
     try {

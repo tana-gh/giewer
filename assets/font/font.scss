@@ -7,7 +7,7 @@ html[lang="ja"] {
         font-family: 'Material Icons';
     }
 
-    * {
+    :not(.giewer, .giewer *) {
         font-family: 'Noto Sans CJK JP', Meiryo, sans-serif;
     }
 }
@@ -17,7 +17,7 @@ html {
         font-family: 'Material Icons';
     }
 
-    * {
+    :not(.giewer, .giewer *) {
         font-family: 'Noto Sans', sans-serif;
     }
 }
